@@ -19,18 +19,17 @@
 namespace koperdog\phpevent;
 
 /**
- * Implementation of handling and trigger events of the class level
+ * Implementation of handling and trigger events of the object level
  *
  * @author Koperdog <koperdog@github.com>
  * @version 1.0
- * @todo Stop further processing from the handler
  */
-class Event{
-    
+class EventComponent implements base\Component{
     /**
-     * @var array All handlers
+     *
+     * @var array 
      */
-    private static $handlers = [];
+    private $handlers = [];
     
     /**
      * Attaches an event handler
@@ -39,12 +38,12 @@ class Event{
      * @param callable $handler
      * @param bool $append
      */
-    public static function on(string $name, callable $handler, bool $append = true){
+    public function on(string $name, callable $handler, bool $append = true){
         if($append){
-            self::$handlers[$name][] = $handler;
+            $this->handlers[$name][] = $handler;
         }
         else{
-            array_unshift(self::$handlers[$name], $handler);
+            array_unshift($this->handlers[$name], $handler);
         }
     }
     
@@ -55,29 +54,29 @@ class Event{
      * @param type $handler
      * @return bool
      */
-    public static function off(string $name, $handler = null): bool {
-        if(!isset(self::$handlers[$name])) return false;
+    public function off(string $name, $handler = null): bool {
+        if(!isset($this->handlers[$name])) return false;
 
         if($handler === null){
-            unset(self::$handlers[$name]);
+            unset($this->handlers[$name]);
         }
-        else if($handler !== null && self::$handlers[$name] === $handler){
-            foreach(self::$handler[$name] as $key => $h){
+        else if($handler !== null && $this->handlers[$name] === $handler){
+            foreach($this->handler[$name] as $key => $h){
                 if($h === $handler){
-                    unset(self::$handlers[$name][$key]);
+                    unset($this->handlers[$name][$key]);
                 }
             }
         }
         
-        self::$handlers = array_values(self::$handlers);
+        $this->handlers = array_values($this->handlers);
         return true;
     }
     
     /**
      * Deattaches all event handlers
      */
-    public static function offAll() {
-        self::$handlers = [];
+    public function offAll() {
+        $this->handlers = [];
     }
     
     /**
@@ -85,9 +84,9 @@ class Event{
      * 
      * @param string $name
      */
-    public static function trigger(string $name) {
-        if(isset(self::$handlers[$name])){
-            foreach(self::$handlers[$name] as $handler){
+    public function trigger(string $name) {
+        if(isset($this->handlers[$name])){
+            foreach($this->handlers[$name] as $handler){
                 call_user_func($handler);
             }
         }
@@ -99,14 +98,7 @@ class Event{
      * @param string $name
      * @return bool
      */
-    public static function hasHandler(string $name): bool {
-        return isset(self::$handlers[$name]);
+    public function hasHandler(string $name): bool {
+        return isset($this->handlers[$name]);
     }
-    
-    /**
-     * Close magic methods
-     */
-    private function __construct(){}
-    private function __clone(){}
-    private function __wakeup(){}
 }

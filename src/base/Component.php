@@ -16,14 +16,15 @@
  * limitations under the License.
  */
 
-namespace koperdog\phpevent;
+namespace koperdog\phpevent\base;
 
 /**
- * base EventListener interface
+ * Object-level event-handling component interface
  * 
  * @author Koperdog <koperdog@github.com>
+ * @version 1.0
  */
-interface EventInterface {
+interface Component {
     
     /**
      * Attaches an event handler
@@ -32,28 +33,28 @@ interface EventInterface {
      * @param callable $handler
      * @param bool $append
      */
-    public static function on(string $name, callable $handler, bool $append = true);
+    public function on(string $name, callable $handler, bool $append = true);
     
     /**
-     * Deattaches an event handler
+     * Deattaches an event handler 
      * 
      * @param string $name
      * @param type $handler
      * @return bool
      */
-    public static function off(string $name, $handler = null): bool;
+    public function off(string $name, $handler = null): bool;
     
     /**
      * Deattaches all event handlers
      */
-    public static function offAll();
+    public function offAll();
     
     /**
      * Trigger an event by name
      * 
      * @param string $name
      */
-    public static function trigger(string $name);
+    public function trigger(string $name);
     
     /**
      * Checks if a handler exists for the specified event
@@ -61,5 +62,5 @@ interface EventInterface {
      * @param string $name
      * @return bool
      */
-    public static function hasHandler(string $name): bool;
+    public function hasHandler(string $name): bool;
 }
