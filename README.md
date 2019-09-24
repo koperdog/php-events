@@ -5,7 +5,7 @@ Trigger and listen to events
 This package requires PHP 7.0 or later.
 
 ## Introduction
-> You can implements **\base\Component** or extends **EventComponent** for creat your Component
+> You can implements **\base\Component** or extends **EventComponent** for create your Component
 
 ## Example
 Class level events:
