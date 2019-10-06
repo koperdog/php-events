@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace koperdog\phpevent\base;
+namespace koperdog\phpevents\base;
 
 /**
  * Object-level event-handling component interface

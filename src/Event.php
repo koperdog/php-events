@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace koperdog\phpevent;
+namespace koperdog\phpevents;
 
 /**
  * Implementation of handling and trigger events of the class level
